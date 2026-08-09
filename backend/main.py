@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 from ai.analyzer import analyze_message
 from priority.engine import calculate_priority
+from notification.engine import decide_notification
 
 from ai.analyzer import analyze_message
 
@@ -35,11 +36,21 @@ def health():
 @app.post("/analyze")
 def analyze(request: MessageRequest):
 
+    # Step 1: Understand the message
     analysis = analyze_message(request.message)
 
+    # Step 2: Calculate priority
     priority = calculate_priority(analysis)
+
+    # Step 3: Decide notification behavior
+    notification = decide_notification(
+        priority=priority["priority"],
+        category=analysis.category,
+        requires_action=analysis.requires_action
+    )
 
     return {
         "analysis": analysis,
-        "priority": priority
+        "priority": priority,
+        "notification": notification
     }
