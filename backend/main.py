@@ -7,16 +7,12 @@ from notification.engine import decide_notification
 from actions.executor import execute_action
 from database.db import initialize_database, save_message
 
-from ai.analyzer import analyze_message
+from api.routes.messages import router as messages_router
 
-from database.db import (
-    initialize_database,
-    save_message,
-    get_messages,
-    get_unread_messages,
-    get_message_by_id,
-    mark_message_as_read
-)
+
+# --------------------------------------------------
+# FastAPI application
+# --------------------------------------------------
 
 app = FastAPI(
     title="NotifyAI",
@@ -24,12 +20,32 @@ app = FastAPI(
     version="0.1.0"
 )
 
+
+# --------------------------------------------------
+# Register routers
+# --------------------------------------------------
+
+app.include_router(messages_router)
+
+
+# --------------------------------------------------
+# Initialize database
+# --------------------------------------------------
+
 initialize_database()
 
+
+# --------------------------------------------------
+# Request model
+# --------------------------------------------------
 
 class MessageRequest(BaseModel):
     message: str
 
+
+# --------------------------------------------------
+# Home endpoint
+# --------------------------------------------------
 
 @app.get("/")
 def home():
@@ -38,12 +54,20 @@ def home():
     }
 
 
+# --------------------------------------------------
+# Health check
+# --------------------------------------------------
+
 @app.get("/health")
 def health():
     return {
         "status": "healthy"
     }
 
+
+# --------------------------------------------------
+# Analyze message
+# --------------------------------------------------
 
 @app.post("/analyze")
 def analyze(request: MessageRequest):
@@ -85,59 +109,11 @@ def analyze(request: MessageRequest):
         priority=priority["priority"]
     )
 
+    # Step 6: Return complete result
     return {
         "message_id": message_id,
         "analysis": analysis,
         "priority": priority,
         "notification": notification,
         "action": action_result
-    }
-
-
-@app.get("/messages")
-def messages():
-
-    return {
-        "messages": get_messages()
-    }
-
-
-@app.get("/messages/unread")
-def unread_messages():
-
-    return {
-        "messages": get_unread_messages()
-    }
-
-
-@app.get("/messages/{message_id}")
-def get_message(message_id: int):
-
-    message = get_message_by_id(message_id)
-
-    if message is None:
-        return {
-            "error": "Message not found"
-        }
-
-    return {
-        "message": message
-    }
-
-
-@app.patch("/messages/{message_id}/read")
-def read_message(message_id: int):
-
-    message = get_message_by_id(message_id)
-
-    if message is None:
-        return {
-            "error": "Message not found"
-        }
-
-    mark_message_as_read(message_id)
-
-    return {
-        "message": "Message marked as read",
-        "message_id": message_id
     }
