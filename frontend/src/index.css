@@ -1,0 +1,335 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  background: #f5f7fb;
+  color: #1f2937;
+}
+
+button {
+  font-family: inherit;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+
+/* -------------------------------- */
+/* Header */
+/* -------------------------------- */
+
+.header {
+  height: 80px;
+
+  background: white;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 40px;
+}
+
+.header h1 {
+  font-size: 24px;
+  color: #111827;
+}
+
+.header p {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.header-status {
+  color: #16a34a;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+
+/* -------------------------------- */
+/* Main layout */
+/* -------------------------------- */
+
+.main {
+  display: flex;
+  min-height: calc(100vh - 80px);
+}
+
+
+/* -------------------------------- */
+/* Sidebar */
+/* -------------------------------- */
+
+.sidebar {
+  width: 240px;
+
+  background: white;
+
+  border-right: 1px solid #e5e7eb;
+
+  padding: 24px 16px;
+}
+
+.compose-button {
+  width: 100%;
+
+  padding: 12px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #2563eb;
+  color: white;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  margin-bottom: 24px;
+}
+
+.compose-button:hover {
+  background: #1d4ed8;
+}
+
+
+.nav-item {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 11px 12px;
+
+  margin-bottom: 4px;
+
+  border-radius: 8px;
+
+  color: #4b5563;
+
+  font-size: 14px;
+
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background: #f3f4f6;
+}
+
+.nav-item.active {
+  background: #eff6ff;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.nav-item span {
+  font-size: 12px;
+
+  background: #f3f4f6;
+
+  padding: 2px 7px;
+
+  border-radius: 10px;
+
+  color: #6b7280;
+}
+
+
+/* -------------------------------- */
+/* Inbox */
+/* -------------------------------- */
+
+.inbox {
+  flex: 1;
+
+  max-width: 1000px;
+
+  padding: 32px 40px;
+}
+
+.inbox-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+.inbox-header h2 {
+  font-size: 22px;
+  color: #111827;
+}
+
+.inbox-header p {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.filter-button {
+  background: white;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 7px;
+
+  padding: 8px 14px;
+
+  cursor: pointer;
+
+  color: #374151;
+}
+
+
+/* -------------------------------- */
+/* Message cards */
+/* -------------------------------- */
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.message-card {
+  display: flex;
+
+  background: white;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+
+  padding: 18px;
+
+  cursor: pointer;
+
+  transition:
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+.message-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+  transform: translateY(-1px);
+}
+
+.message-indicator {
+  width: 4px;
+
+  border-radius: 4px;
+
+  margin-right: 16px;
+}
+
+.critical .message-indicator {
+  background: #dc2626;
+}
+
+.high .message-indicator {
+  background: #f97316;
+}
+
+.normal .message-indicator {
+  background: #eab308;
+}
+
+.low .message-indicator {
+  background: #9ca3af;
+}
+
+.message-content {
+  flex: 1;
+}
+
+.message-top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 8px;
+}
+
+.priority-badge {
+  font-size: 11px;
+
+  font-weight: 600;
+
+  padding: 4px 8px;
+
+  border-radius: 12px;
+}
+
+.critical-badge {
+  color: #b91c1c;
+  background: #fee2e2;
+}
+
+.high-badge {
+  color: #c2410c;
+  background: #ffedd5;
+}
+
+.normal-badge {
+  color: #a16207;
+  background: #fef9c3;
+}
+
+.low-badge {
+  color: #4b5563;
+  background: #f3f4f6;
+}
+
+.message-time {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.message-card h3 {
+  font-size: 15px;
+
+  color: #111827;
+
+  margin-bottom: 6px;
+}
+
+.message-card p {
+  font-size: 14px;
+
+  color: #6b7280;
+
+  line-height: 1.5;
+}
+
+.message-meta {
+  display: flex;
+
+  gap: 16px;
+
+  margin-top: 12px;
+
+  font-size: 12px;
+
+  color: #6b7280;
+}
