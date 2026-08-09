@@ -20,3 +20,35 @@ export interface Message {
 export interface MessagesResponse {
   messages: Message[];
 }
+
+export interface AnalysisResult {
+  message_id: number;
+
+  analysis: {
+    summary: string;
+    category: string;
+    importance: number;
+    urgency: number;
+    requires_action: boolean;
+    deadline: string | null;
+    suggested_action: string | null;
+  };
+
+  priority: {
+    priority: string;
+    label: string;
+    score: number;
+    reason: string;
+  };
+
+  notification: {
+    action: string;
+    reason: string;
+  };
+
+  action: {
+    executed: boolean;
+    action: string;
+    message: string;
+  };
+}

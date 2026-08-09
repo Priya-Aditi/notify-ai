@@ -370,3 +370,103 @@ button {
 .empty-state p {
   color: #6b7280;
 }
+/* -------------------------------- */
+/* Analyze panel */
+/* -------------------------------- */
+
+.analyze-panel {
+  background: white;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 12px;
+
+  padding: 24px;
+
+  margin-bottom: 24px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.analyze-header {
+  margin-bottom: 20px;
+}
+
+.analyze-header h2 {
+  font-size: 20px;
+  color: #111827;
+}
+
+.analyze-header p {
+  margin-top: 5px;
+
+  font-size: 14px;
+
+  color: #6b7280;
+}
+
+.analyze-panel textarea {
+  width: 100%;
+
+  resize: vertical;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  padding: 12px;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  outline: none;
+}
+
+.analyze-panel textarea:focus {
+  border-color: #2563eb;
+
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.analyze-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-top: 16px;
+}
+
+.analyze-button {
+  border: none;
+
+  border-radius: 8px;
+
+  padding: 10px 18px;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.analyze-button:hover {
+  background: #1d4ed8;
+}
+
+.analyze-button:disabled {
+  background: #93c5fd;
+
+  cursor: not-allowed;
+}
+
+.analyze-error {
+  margin-top: 10px;
+
+  color: #dc2626;
+
+  font-size: 13px;
+}

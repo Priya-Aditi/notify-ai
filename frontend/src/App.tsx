@@ -5,6 +5,7 @@ import { getMessages } from "./services/api";
 import type { Message } from "./types/message";
 
 import MessageCard from "./components/MessageCard";
+import AnalyzeMessage from "./components/AnalyzeMessage";
 
 
 function App() {
@@ -15,30 +16,32 @@ function App() {
 
   const [error, setError] = useState<string | null>(null);
 
+  const [showAnalyze, setShowAnalyze] = useState(false);
+
+
+  async function loadMessages() {
+
+    try {
+
+      const data = await getMessages();
+
+      setMessages(data.messages);
+
+    } catch (err) {
+
+      console.error(err);
+
+      setError("Unable to load messages.");
+
+    } finally {
+
+      setLoading(false);
+
+    }
+  }
+
 
   useEffect(() => {
-
-    async function loadMessages() {
-
-      try {
-
-        const data = await getMessages();
-
-        setMessages(data.messages);
-
-      } catch (err) {
-
-        console.error(err);
-
-        setError("Unable to load messages.");
-
-      } finally {
-
-        setLoading(false);
-
-      }
-    }
-
 
     loadMessages();
 
@@ -103,7 +106,10 @@ function App() {
 
         <aside className="sidebar">
 
-          <button className="compose-button">
+          <button
+            className="compose-button"
+            onClick={() => setShowAnalyze(true)}
+          >
             + Analyze Message
           </button>
 
@@ -188,6 +194,23 @@ function App() {
         {/* Inbox */}
 
         <section className="inbox">
+
+          {/* Analyze Message Panel */}
+
+          {showAnalyze && (
+
+            <AnalyzeMessage
+              onAnalyzed={() => {
+
+                setShowAnalyze(false);
+
+                loadMessages();
+
+              }}
+            />
+
+          )}
+
 
           <div className="inbox-header">
 
