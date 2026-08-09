@@ -12,7 +12,10 @@ from ai.analyzer import analyze_message
 from database.db import (
     initialize_database,
     save_message,
-    get_messages
+    get_messages,
+    get_unread_messages,
+    get_message_by_id,
+    mark_message_as_read
 )
 
 app = FastAPI(
@@ -96,4 +99,45 @@ def messages():
 
     return {
         "messages": get_messages()
+    }
+
+
+@app.get("/messages/unread")
+def unread_messages():
+
+    return {
+        "messages": get_unread_messages()
+    }
+
+
+@app.get("/messages/{message_id}")
+def get_message(message_id: int):
+
+    message = get_message_by_id(message_id)
+
+    if message is None:
+        return {
+            "error": "Message not found"
+        }
+
+    return {
+        "message": message
+    }
+
+
+@app.patch("/messages/{message_id}/read")
+def read_message(message_id: int):
+
+    message = get_message_by_id(message_id)
+
+    if message is None:
+        return {
+            "error": "Message not found"
+        }
+
+    mark_message_as_read(message_id)
+
+    return {
+        "message": "Message marked as read",
+        "message_id": message_id
     }

@@ -125,6 +125,48 @@ def get_messages():
     return [dict(row) for row in rows]
 
 
+def get_unread_messages():
+
+    connection = get_connection()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM messages
+        WHERE is_read = 0
+        ORDER BY created_at DESC
+    """)
+
+    rows = cursor.fetchall()
+
+    connection.close()
+
+    return [dict(row) for row in rows]
+
+
+def get_message_by_id(message_id: int):
+
+    connection = get_connection()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM messages
+        WHERE id = ?
+    """, (message_id,))
+
+    row = cursor.fetchone()
+
+    connection.close()
+
+    if row is None:
+        return None
+
+    return dict(row)
+
+
 def mark_message_as_read(message_id: int):
 
     connection = get_connection()
