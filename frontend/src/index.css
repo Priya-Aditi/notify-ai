@@ -333,3 +333,40 @@ button {
 
   color: #6b7280;
 }
+.loading,
+.error {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+}
+
+.error {
+  color: #dc2626;
+}
+
+
+.empty-state {
+  background: white;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+
+  padding: 50px;
+
+  text-align: center;
+}
+
+.empty-state h3 {
+  color: #111827;
+
+  margin-bottom: 8px;
+}
+
+.empty-state p {
+  color: #6b7280;
+}
