@@ -1,10 +1,16 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
 from database.db import (
     get_messages,
     get_unread_messages,
     get_message_by_id,
     mark_message_as_read
+)
+
+from schemas.responses import (
+    MessagesResponse,
+    SingleMessageResponse,
+    ReadMessageResponse
 )
 
 
@@ -14,7 +20,10 @@ router = APIRouter(
 )
 
 
-@router.get("")
+@router.get(
+    "",
+    response_model=MessagesResponse
+)
 def messages():
 
     return {
@@ -22,7 +31,10 @@ def messages():
     }
 
 
-@router.get("/unread")
+@router.get(
+    "/unread",
+    response_model=MessagesResponse
+)
 def unread_messages():
 
     return {
@@ -30,30 +42,38 @@ def unread_messages():
     }
 
 
-@router.get("/{message_id}")
+@router.get(
+    "/{message_id}",
+    response_model=SingleMessageResponse
+)
 def get_message(message_id: int):
 
     message = get_message_by_id(message_id)
 
     if message is None:
-        return {
-            "error": "Message not found"
-        }
+        raise HTTPException(
+            status_code=404,
+            detail="Message not found"
+        )
 
     return {
         "message": message
     }
 
 
-@router.patch("/{message_id}/read")
+@router.patch(
+    "/{message_id}/read",
+    response_model=ReadMessageResponse
+)
 def read_message(message_id: int):
 
     message = get_message_by_id(message_id)
 
     if message is None:
-        return {
-            "error": "Message not found"
-        }
+        raise HTTPException(
+            status_code=404,
+            detail="Message not found"
+        )
 
     mark_message_as_read(message_id)
 

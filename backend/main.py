@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from api.routes.messages import router as messages_router
 from services.message_service import process_message
 from database.db import initialize_database
-
+from schemas.responses import AnalyzeResponse
 
 # --------------------------------------------------
 # FastAPI application
@@ -65,7 +65,10 @@ def health():
 # Analyze message
 # --------------------------------------------------
 
-@app.post("/analyze")
+@app.post(
+    "/analyze",
+    response_model=AnalyzeResponse
+)
 def analyze(request: MessageRequest):
 
     return process_message(request.message)
